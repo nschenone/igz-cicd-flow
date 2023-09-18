@@ -1,0 +1,63 @@
+kind: project
+metadata:
+  name: cicd-flow
+  created: '2023-09-18T23:17:25.970000'
+spec:
+  functions:
+  - url: src/project_setup.py
+    name: image-builder
+    kind: job
+    image: mlrun/mlrun:1.4.1
+    handler: assert_build
+  - url: src/functions/data.py
+    name: data
+    kind: job
+    with_repo: true
+  - url: hub://describe
+    name: describe
+    kind: job
+    handler: analyze
+  - url: src/functions/train.py
+    name: train
+    kind: job
+    image: mlrun/mlrun:1.4.1
+    handler: train_model
+  - url: src/functions/validate.py
+    name: validate
+    kind: job
+  - url: src/functions/test_classifier.py
+    name: test
+    kind: job
+    handler: test_classifier
+  - url: hub://v2_model_server
+    name: serving
+    kind: serving
+    image: mlrun/mlrun:1.4.1
+    requirements:
+    - PyGithub==1.59.0
+    - deepchecks==0.17.4
+  - url: hub://v2_model_tester
+    name: model-server-tester
+    kind: job
+    handler: model_server_tester
+  workflows:
+  - path: src/workflows/train_workflow.py
+    name: train
+  - path: src/workflows/evaluate_workflow.py
+    name: evaluate
+  - path: src/workflows/deploy_workflow.py
+    name: deploy
+  artifacts: []
+  conda: ''
+  source: v3io:///bigdata/cicd-flow.zip
+  origin_url: git://github.com/igz-us-sales/igz-cicd-flow.git#refs/heads/master
+  load_source_on_run: true
+  desired_state: online
+  owner: nick
+  default_image: .mlrun/func-cicd-flow-image-builder:latest
+  build:
+    commands: []
+    requirements: []
+  custom_packagers: []
+status:
+  state: online
