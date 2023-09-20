@@ -3,19 +3,14 @@ import click
 from src import create_and_set_project, load_config, TrainConfig, EvaluateConfig, DeployConfig
 
 
-config = load_config()
-
-
 PIPELINE_MAPPING = {
     "train" : TrainConfig,
     "evaluate" : EvaluateConfig,
     "deploy" : DeployConfig
 }
+SOURCES = ["git", "local"]
+BRANCHES = ["development", "staging", "master"]
 
-SOURCE_MAPPING = {
-    "local" : config.local_source,
-    "git" : config.git_source
-}
 
 @click.command()
 @click.option(
@@ -26,22 +21,31 @@ SOURCE_MAPPING = {
 )
 @click.option(
     "--source",
-    type=click.Choice(list(SOURCE_MAPPING.keys())),
+    type=click.Choice(SOURCES),
     required=True,
     help="Specify the source.",
     default="local"
 )
+@click.option(
+    "--branch",
+    type=click.Choice(BRANCHES),
+    required=True,
+    help="Specify the branch - only relevant when using git source.",
+    default="development"
+)
 def main(
     workflow_name: str,
-    source: str
+    source: str,
+    branch: str
 ) -> None:
-    global config
     
-    print(f"Loading project {config.project_name} with source {source}")
-    project = create_and_set_project(name=config.project_name, git_source=SOURCE_MAPPING[source])
+    config = load_config(git_branch=branch)
+    project_source = config.git_source if source == "git" else config.local_source
+    
+    print(f"Loading project {config.project_name} with source {project_source}")
+    project = create_and_set_project(name=config.project_name, source=project_source)
     
     print(f"Loading config for workflow {workflow_name}...")
-    config = load_config()
     workflow_config = PIPELINE_MAPPING[workflow_name](**config.dict())
     
     print(f"Running workflow {workflow_name}...")

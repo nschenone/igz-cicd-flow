@@ -14,8 +14,8 @@ def assert_build():
 
 
 def create_and_set_project(
-    git_source: str,
-    name: str = "cicd-flow",
+    name: str,
+    source: str,
     default_image: str = None,
     default_base_image: str = "mlrun/mlrun:1.4.1",
     user_project: bool = False,
@@ -24,7 +24,7 @@ def create_and_set_project(
 ):
     """
     Creating the project for this demo.
-    :param git_source:              the git source of the project.
+    :param source:                  the source of the project.
     :param name:                    project name
     :param default_image:           the default image of the project
     :param user_project:            whether to add username to the project name
@@ -61,12 +61,12 @@ def create_and_set_project(
         project.set_default_image(default_image)
 
     # Export project to zip if relevant
-    if ".zip" in git_source:
-        print(f"Exporting project as zip archive to {git_source}...")
-        project.export(git_source)
+    if ".zip" in source:
+        print(f"Exporting project as zip archive to {source}...")
+        project.export(source)
 
-    # Set the project git source
-    project.set_source(git_source, pull_at_runtime=True)
+    # Set the project source
+    project.set_source(source, pull_at_runtime=True)
 
     # Set MLRun functions
     project.set_function(
