@@ -86,3 +86,18 @@ def pipeline(
         ),
         outputs=["model"],
     ).after(validate_train_test_split)
+
+    validate_model = project.run_function(
+        "validate",
+        handler="validate_model",
+        inputs={
+            "train": process.outputs["train"],
+            "test": process.outputs["test"],
+        },
+        params={
+            "model_path": train.outputs["model"],
+            "label_column": label_column,
+            "allow_validation_failure": allow_validation_failure,
+        },
+        outputs=["passed_suite"],
+    )

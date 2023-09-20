@@ -119,9 +119,6 @@ def create_and_set_project(
         name="train", workflow_path="src/workflows/train_workflow.py"
     )
     project.set_workflow(
-        name="evaluate", workflow_path="src/workflows/evaluate_workflow.py"
-    )
-    project.set_workflow(
         name="deploy", workflow_path="src/workflows/deploy_workflow.py"
     )
 
