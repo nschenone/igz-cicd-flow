@@ -112,6 +112,12 @@ def create_and_set_project(
         kind="job",
         handler="model_server_tester",
     )
+    project.set_function(
+        name="get-model-uri",
+        func="src/functions/get_model_uri.py",
+        kind="job",
+        handler="get_model_uri_from_tag",
+    )
 
 
     # Set MLRun workflows

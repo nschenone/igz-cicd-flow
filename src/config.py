@@ -1,28 +1,29 @@
 from typing import Optional
-import yaml
 
 from pydantic import BaseModel, BaseSettings
 
 
 class Config(BaseSettings):
     # Project
-    project_name: str
-    local_source: str
-    git_repo: str
-    git_branch: str
+    project_name: str = "cicd-flow"
+    local_source: str = "v3io:///bigdata/cicd-flow.zip"
+    git_repo: str = "git://github.com/igz-us-sales/igz-cicd-flow"
+    git_branch: str = "master"
     
     # Workflow parameters
-    source_url: str
-    label_column: str
-    allow_validation_failure: bool
-    ohe_columns: list
-    test_size: float
-    model_name: str
+    source_url: str = "./data/heart.csv"
+    label_column: str = "target"
+    allow_validation_failure: bool = True
+    ohe_columns: list = ["sex", "cp", "slope", "thal", "restecg"]
+    test_size: float = 0.1
+    deploy_model_name: str = "model"
+    deploy_condition_metric: str = "evaluation_accuracy"
+    force_deploy: bool = False
     
     # Artifacts
-    model_path: Optional[str]
-    train_set: Optional[str]
-    test_set: Optional[str]
+    challenger_model_tag: str = "challenger"
+    champion_model_tag: str = "champion"
+
     
     @property
     def git_source(self):
@@ -37,24 +38,8 @@ class TrainConfig(BaseModel):
     test_size: float
 
     
-class EvaluateConfig(BaseModel):
-    model_path: str
-    train_set: str
-    test_set: str
-    label_column: str
-    allow_validation_failure: bool
-    
-    
 class DeployConfig(BaseModel):
-    model_path: str
-    test_set: str
+    challenger_model_tag: str
+    champion_model_tag: str
     label_column: str
-    model_name: str
-
-    
-def load_config(config_path: str = "config.yaml", **kwargs) -> Config:
-    with open(config_path, "r") as f:
-        config = yaml.safe_load(f)
-    for key, value in kwargs.items():
-        config[key] = value
-    return Config(**config)
+    deploy_model_name: str

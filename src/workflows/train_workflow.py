@@ -5,10 +5,10 @@ from kfp import dsl
 @dsl.pipeline(name="GitOps Training Pipeline", description="Train a model")
 def pipeline(
     source_url: str,
-    label_column: str = "target",
-    allow_validation_failure: bool = False,
-    ohe_columns: list = "None",
-    test_size: float = 0.1,
+    label_column: str,
+    allow_validation_failure: bool,
+    ohe_columns: list,
+    test_size: float,
 ):
     # Get our project object
     project = mlrun.get_current_project()

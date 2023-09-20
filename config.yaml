@@ -1,23 +1,6 @@
-# Project
-project_name: cicd-flow
-local_source: v3io:///bigdata/cicd-flow.zip
-git_repo: git://github.com/igz-us-sales/igz-cicd-flow
-git_branch: master
 
-# Workflow parameters
-source_url: ./data/heart.csv
-label_column: target
-allow_validation_failure: true
-ohe_columns:
-- sex
-- cp
-- slope
-- thal
-- restecg
-test_size: 0.1
-model_name: model
 
 # Artifacts
-model_path: store://models/cicd-flow/model#4:4c054e48-2d96-4cd8-8494-7855594c816b
-train_set: store://datasets/cicd-flow/data-process-data_train#0:4c054e48-2d96-4cd8-8494-7855594c816b
-test_set: store://datasets/cicd-flow/data-process-data_test#0:4c054e48-2d96-4cd8-8494-7855594c816b
+model_path: 
+train_set: 
+test_set: 

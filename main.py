@@ -1,11 +1,10 @@
 import click
 
-from src import create_and_set_project, load_config, TrainConfig, EvaluateConfig, DeployConfig
+from src import create_and_set_project, Config, TrainConfig, DeployConfig
 
 
 PIPELINE_MAPPING = {
     "train" : TrainConfig,
-    "evaluate" : EvaluateConfig,
     "deploy" : DeployConfig
 }
 SOURCES = ["git", "local"]
@@ -39,7 +38,7 @@ def main(
     branch: str
 ) -> None:
     
-    config = load_config(git_branch=branch)
+    config = Config(git_branch=branch)
     project_source = config.git_source if source == "git" else config.local_source
     
     print(f"Loading project {config.project_name} with source {project_source}")

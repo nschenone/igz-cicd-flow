@@ -40,6 +40,10 @@ spec:
     name: model-server-tester
     kind: job
     handler: model_server_tester
+  - url: src/functions/get_model_uri.py
+    name: get-model-uri
+    kind: job
+    handler: get_model_uri_from_tag
   workflows:
   - path: src/workflows/train_workflow.py
     name: train
