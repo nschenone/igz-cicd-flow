@@ -12,6 +12,7 @@ jobs:
   deploy-workflow:
     name: deploy-model
     runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
     container:
       image: mlrun/mlrun:1.4.1
       options: --user 1001
