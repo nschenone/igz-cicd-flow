@@ -58,6 +58,10 @@ conda-env: ## Create a conda environment
 	@echo "Installing dependencies"
 	$(CONDA_ACTIVATE) $(CONDA_ENV); pip install -r requirements-mlrun.txt
 	$(CONDA_ACTIVATE) $(CONDA_ENV); pip install -r requirements.txt -r requirements-dev.txt
+    
+.PHONY: install-requirements
+install-requirements: ## Install all requirements needed for development
+	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt -r requirements-dev.txt
 
 .PHONY: test
 test: ## Run unit tests via pytest
