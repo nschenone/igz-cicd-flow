@@ -34,7 +34,11 @@ def main(workflow_name: str, source: str, branch: str) -> None:
     project_source = config.git_source if source == "git" else config.archive_source
 
     print(f"Loading project {config.project_name} with source {project_source}")
-    project = create_and_set_project(name=config.project_name, source=project_source)
+    project = create_and_set_project(
+        name=config.project_name,
+        source=project_source,
+        artifact_path=config.artifact_path,
+    )
 
     print(f"Loading config for workflow {workflow_name}...")
     workflow_config = config.get_workflow_config(workflow_name=workflow_name)

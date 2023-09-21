@@ -32,7 +32,7 @@ def create_and_set_project(
     # Set MLRun project secrets via secrets file
     if secrets_file and os.path.exists(secrets_file):
         project.set_secrets(file_path=secrets_file)
-        
+
     # Set artifact path
     if artifact_path:
         project.artifact_path = artifact_path
