@@ -1,5 +1,3 @@
-import importlib
-
 import mlrun
 
 
@@ -62,10 +60,7 @@ def create_and_set_project(
 
     # Set MLRun functions
     project.set_function(
-        name="data",
-        func="src/functions/data.py",
-        kind="job",
-        with_repo=True
+        name="data", func="src/functions/data.py", kind="job", with_repo=True
     )
     project.set_function(
         name="describe",
@@ -111,11 +106,8 @@ def create_and_set_project(
         handler="get_model_uri_from_tag",
     )
 
-
     # Set MLRun workflows
-    project.set_workflow(
-        name="train", workflow_path="src/workflows/train_workflow.py"
-    )
+    project.set_workflow(name="train", workflow_path="src/workflows/train_workflow.py")
     project.set_workflow(
         name="deploy", workflow_path="src/workflows/deploy_workflow.py"
     )

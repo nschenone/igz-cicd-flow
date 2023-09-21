@@ -87,7 +87,7 @@ def pipeline(
         outputs=["model"],
     ).after(validate_train_test_split)
 
-    validate_model = project.run_function(
+    project.run_function(
         "validate",
         handler="validate_model",
         inputs={

@@ -2,15 +2,15 @@ import cloudpickle
 import mlrun
 import pandas as pd
 from deepchecks.tabular import Dataset
-from deepchecks.tabular.suites import (data_integrity, model_evaluation,
-                                       train_test_validation)
+from deepchecks.tabular.suites import (
+    data_integrity,
+    model_evaluation,
+    train_test_validation,
+)
 
 
 def create_deepchecks_dataset(df: pd.DataFrame, label_column: str) -> Dataset:
-    # Get numerical and categorical columns based on dataframe types
-    numerical_columns = list(
-        set(df.select_dtypes("number").columns) - set([label_column])
-    )
+    # Get categorical columns based on dataframe types
     categorical_columns = list(
         set(df.select_dtypes("object").columns) - set([label_column])
     )
@@ -39,7 +39,7 @@ def validate_data_integrity(
     context.log_artifact("suite_report", local_path=suite_report)
 
     assert (
-        allow_validation_failure or passed_suite == True
+        allow_validation_failure or passed_suite is True
     ), "Data integrity validation failed"
 
 
@@ -69,7 +69,7 @@ def validate_train_test_split(
     context.log_artifact("suite_report", local_path=suite_report)
 
     assert (
-        allow_validation_failure or passed_suite == True
+        allow_validation_failure or passed_suite is True
     ), "Train test split validation failed"
 
 
@@ -104,4 +104,4 @@ def validate_model(
     context.log_result("passed_suite", passed_suite)
     context.log_artifact("suite_report", local_path=suite_report)
 
-    assert allow_validation_failure or passed_suite == True, "Model validation failed"
+    assert allow_validation_failure or passed_suite is True, "Model validation failed"

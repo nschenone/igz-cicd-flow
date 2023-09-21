@@ -23,12 +23,13 @@ all:
 clean: ## Delete all compiled Python files
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
+	find . -type d -name ".ipynb_checkpoints" -exec rm -rf {} +
 	rm -rf .pytest_cache
 	rm -rf build
 	rm -rf dist
 
 .PHONY: fmt
-fmt: ## Format the code (using black and isort)
+fmt: clean ## Format the code (using black and isort)
 	@echo "Running black fmt..."
 	$(PYTHON_INTERPRETER) -m black $(SRC)
 	$(PYTHON_INTERPRETER) -m isort $(SRC)
@@ -37,7 +38,7 @@ fmt: ## Format the code (using black and isort)
 lint: fmt-check flake8 ## Run lint on the code
 
 .PHONY: fmt-check
-fmt-check: ## Format and check the code (using black and isort)
+fmt-check: clean ## Format and check the code (using black and isort)
 	@echo "Running black+isort fmt check..."
 	$(PYTHON_INTERPRETER) -m black --check --diff $(SRC)
 	$(PYTHON_INTERPRETER) -m isort --check --diff $(SRC)

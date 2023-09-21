@@ -101,7 +101,7 @@ def test_classifier(
                 model_config["model_path"], suffix=".pkl"
             )
             model_obj = load(open(model_file, "rb"))
-        except Exception as a:
+        except Exception:
             raise Exception("model location likely specified")
 
         # Evalaute
@@ -113,7 +113,7 @@ def test_classifier(
             context.log_result(f"{metric}-{model_name}", value)
 
         # Update model artifact with metrics
-        if model_obj and model_update == True:
+        if model_obj and model_update is True:
             update_model(
                 model_config["model_path"],
                 metrics=metrics,
