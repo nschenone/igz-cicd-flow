@@ -33,9 +33,7 @@ spec:
     name: serving
     kind: serving
     image: mlrun/mlrun:1.4.1
-    requirements:
-    - PyGithub==1.59.0
-    - deepchecks==0.17.4
+    requirements: requirements.txt
   - url: hub://v2_model_tester
     name: model-server-tester
     kind: job
@@ -60,6 +58,8 @@ spec:
   owner: nick
   default_image: .mlrun/func-cicd-flow-image-builder:latest
   build:
+    image: .mlrun/func-cicd-flow-image-builder:latest
+    base_image: mlrun/mlrun:1.4.1
     commands: []
     requirements: []
   custom_packagers: []

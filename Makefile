@@ -3,7 +3,7 @@
 PYTHON_INTERPRETER = python
 SHELL=/bin/bash -e
 SRC ?= src
-CONDA_ENV ?= igz-liveops-demo
+CONDA_ENV ?= igz-cicd-flow
 CONDA_PY_VER ?= 3.9
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
 
@@ -54,7 +54,8 @@ conda-env: ## Create a conda environment
 		conda create -n $(CONDA_ENV) -y python=$(CONDA_PY_VER) ipykernel graphviz pip protobuf=3.20.3; \
 	fi
 	@echo "Installing dependencies"
-	$(CONDA_ACTIVATE) $(CONDA_ENV); pip install -r requirements.txt -r dev-requirements.txt
+	$(CONDA_ACTIVATE) $(CONDA_ENV); pip install -r requirements-mlrun.txt
+	$(CONDA_ACTIVATE) $(CONDA_ENV); pip install -r requirements.txt -r requirements-dev.txt
 
 .PHONY: test
 test: ## Run unit tests via pytest

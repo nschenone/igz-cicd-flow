@@ -2,22 +2,13 @@ import importlib
 
 import mlrun
 
-IMAGE_REQUIREMENTS = ["PyGithub==1.59.0", "deepchecks==0.17.4"]
-
-
-def assert_build():
-    for module_name in IMAGE_REQUIREMENTS:
-        name, version = module_name.split("==")
-        module = importlib.import_module(name)
-        print(module.__version__)
-        assert module.__version__ == version
-
 
 def create_and_set_project(
     name: str,
     source: str,
     default_image: str = None,
     default_base_image: str = "mlrun/mlrun:1.4.1",
+    image_requirements_file: str = "requirements.txt",
     user_project: bool = False,
     env_file: str = None,
     force_build: bool = False,
@@ -55,9 +46,10 @@ def create_and_set_project(
             build_status = project.build_function(
                 function=image_builder,
                 base_image=default_base_image,
-                requirements=IMAGE_REQUIREMENTS,
+                requirements=image_requirements_file,
             )
             default_image = build_status.outputs["image"]
+
         project.set_default_image(default_image)
 
     # Export project to zip if relevant
@@ -104,7 +96,7 @@ def create_and_set_project(
         func="hub://v2_model_server",
         kind="serving",
         image=default_base_image,
-        requirements=IMAGE_REQUIREMENTS,
+        requirements=image_requirements_file,
     )
     project.set_function(
         name="model-server-tester",
