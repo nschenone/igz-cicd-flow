@@ -1,0 +1,30 @@
+name: train-workflow
+on: 
+  workflow_dispatch:
+
+jobs:
+  training-workflow:
+    name: training-model
+    runs-on: ubuntu-latest
+    container:
+      image: mlrun/mlrun:1.4.1
+      options: --user 1001
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get Current Branch
+      id: branch
+      run: echo "::set-output name=branch::$(echo $GITHUB_REF | sed 's/refs\/heads\///')"
+    - name: Training model
+      run: |
+        python main.py --workflow-name train --source git --branch ${{ steps.branch.outputs.branch }}
+      env:
+        V3IO_USERNAME: ${{ secrets.V3IO_USERNAME }}
+        V3IO_PASSWORD: ${{ secrets.V3IO_USERNAME }}
+        V3IO_API: ${{ secrets.V3IO_API }}
+        V3IO_ACCESS_KEY: ${{ secrets.V3IO_ACCESS_KEY }}
+        MLRUN_DBPATH: ${{ secrets.MLRUN_DBPATH }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        CMD: ${{ github.event.comment.body}}  
+        COMMIT: ${{ github.sha}}
