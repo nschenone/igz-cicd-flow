@@ -25,6 +25,7 @@ class AppConfig(BaseSettings):
     git_repo: str = "git://github.com/igz-us-sales/igz-cicd-flow"
     git_branch: str = "master"
     secrets_file: str = "secrets.env"
+    artifact_path: str = "s3://igz-artifacts/projects/{{run.project}}/artifacts"
 
     # CI/CD environments
     environments: List[str] = ["development", "staging", "master"]

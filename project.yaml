@@ -52,6 +52,8 @@ spec:
   artifacts:
   - import_from: artifacts/model:challenger.yaml
     key: model
+    tag: challenger
+  artifact_path: s3://igz-artifacts/projects/{{run.project}}/artifacts
   conda: ''
   source: v3io:///bigdata/cicd-flow.zip
   origin_url: git://github.com/igz-us-sales/igz-cicd-flow.git#refs/heads/master

@@ -9,6 +9,7 @@ def create_and_set_project(
     default_image: str = None,
     default_base_image: str = "mlrun/mlrun:1.4.1",
     image_requirements_file: str = "requirements.txt",
+    artifact_path: str = None,
     user_project: bool = False,
     secrets_file: str = None,
     force_build: bool = False,
@@ -31,6 +32,10 @@ def create_and_set_project(
     # Set MLRun project secrets via secrets file
     if secrets_file and os.path.exists(secrets_file):
         project.set_secrets(file_path=secrets_file)
+        
+    # Set artifact path
+    if artifact_path:
+        project.artifact_path = artifact_path
 
     # Load artifacts
     project.register_artifacts()
