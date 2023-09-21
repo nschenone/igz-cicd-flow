@@ -27,17 +27,32 @@ config = AppConfig()
     help="Specify the branch - only relevant when using git source.",
     default="development",
 )
-def main(workflow_name: str, source: str, branch: str) -> None:
+@click.option(
+    "--single-cluster-mode",
+    is_flag=True,
+    help="Specify whether the environments exist in the same cluster.",
+    default=False,
+)
+def main(
+    workflow_name: str, source: str, branch: str, single_cluster_mode: bool
+) -> None:
     global config
 
+    # Set source - git or archive
     config.git_branch = branch
     project_source = config.git_source if source == "git" else config.archive_source
+
+    # Single user mode - project will be run using service account
+    user_project = (
+        True if single_cluster_mode and branch in ["staging", "master"] else False
+    )
 
     print(f"Loading project {config.project_name} with source {project_source}")
     project = create_and_set_project(
         name=config.project_name,
         source=project_source,
         artifact_path=config.artifact_path,
+        user_project=user_project,
     )
 
     print(f"Loading config for workflow {workflow_name}...")
