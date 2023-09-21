@@ -13,6 +13,8 @@ jobs:
       
     steps:
     - uses: actions/checkout@v2
+    - name: Install make
+      run: apt-get update && apt-get install make -y
     - name: Install dependencies
       run: make install-requirements
     - name: Lint
@@ -27,6 +29,8 @@ jobs:
       
     steps:
     - uses: actions/checkout@v2
+    - name: Install make
+      run: apt-get update && apt-get install make -y
     - name: Install dependencies
       run: make install-requirements
     - name: Unit tests
