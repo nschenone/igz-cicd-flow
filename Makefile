@@ -3,6 +3,7 @@
 PYTHON_INTERPRETER = python
 SHELL=/bin/bash -e
 SRC ?= src
+TESTS ?= tests
 CONDA_ENV ?= igz-cicd-flow
 CONDA_PY_VER ?= 3.9
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
@@ -61,4 +62,4 @@ conda-env: ## Create a conda environment
 .PHONY: test
 test: ## Run unit tests via pytest
 	@echo "Running unit tests via pytest..."
-	$(PYTHON_INTERPRETER) -m pytest
+	$(PYTHON_INTERPRETER) -m pytest $(TESTS)
