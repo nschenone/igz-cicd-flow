@@ -1,3 +1,5 @@
+import os
+
 import mlrun
 
 
@@ -8,7 +10,7 @@ def create_and_set_project(
     default_base_image: str = "mlrun/mlrun:1.4.1",
     image_requirements_file: str = "requirements.txt",
     user_project: bool = False,
-    env_file: str = None,
+    secrets_file: str = None,
     force_build: bool = False,
 ):
     """
@@ -21,14 +23,17 @@ def create_and_set_project(
     :returns: a fully prepared project for this demo.
     """
 
-    # Set MLRun DB endpoint
-    if env_file:
-        mlrun.set_env_from_file(env_file=env_file)
-
     # Get / Create a project from the MLRun DB:
     project = mlrun.get_or_create_project(
         name=name, context="./", user_project=user_project
     )
+
+    # Set MLRun project secrets via secrets file
+    if secrets_file and os.path.exists(secrets_file):
+        project.set_secrets(file_path=secrets_file)
+
+    # Load artifacts
+    project.register_artifacts()
 
     # Set or build the default image:
     if force_build or project.default_image is None:
@@ -113,6 +118,9 @@ def create_and_set_project(
     )
 
     # Set artifacts
+    project.set_artifact(
+        key="model", artifact="artifacts/model:challenger.yaml", tag="challenger"
+    )
 
     # Save and return the project:
     project.save()

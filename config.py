@@ -24,6 +24,7 @@ class AppConfig(BaseSettings):
     archive_source: str = "v3io:///bigdata/cicd-flow.zip"
     git_repo: str = "git://github.com/igz-us-sales/igz-cicd-flow"
     git_branch: str = "master"
+    secrets_file: str = "secrets.env"
 
     # CI/CD environments
     environments: List[str] = ["development", "staging", "master"]

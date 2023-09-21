@@ -19,7 +19,7 @@ models/*
 !.gitkeep
 .DS_Store
 *.env
-!mlrun.env
+!secrets.default.env
 schedules
 !data/sample/*
 scratch.ipynb
