@@ -42,12 +42,12 @@ def main(
     project = create_and_set_project(name=config.project_name, source=project_source)
     
     print(f"Loading config for workflow {workflow_name}...")
-    workflow_config = config.workflows[workflow_name](**config.dict())
+    workflow_config = config.get_workflow_config(workflow_name=workflow_name)
     
     print(f"Running workflow {workflow_name}...")
     run_id = project.run(
         name=workflow_name,
-        arguments=workflow_config.dict(),
+        arguments=workflow_config,
         dirty=True,
         watch=True
     )

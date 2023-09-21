@@ -47,8 +47,10 @@ class AppConfig(BaseSettings):
         "train": TrainConfig,
         "deploy": DeployConfig
     }
-
     
     @property
     def git_source(self):
         return f"{self.git_repo}#{self.git_branch}"
+
+    def get_workflow_config(self, workflow_name: str) -> dict:
+        return self.workflows[workflow_name](**self.dict()).dict()
