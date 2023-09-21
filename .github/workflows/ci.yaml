@@ -9,10 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mlrun/mlrun:1.4.1
-      options: --user 1001
       
     steps:
     - uses: actions/checkout@v2
+    - name: Install make
+      run: apt-get update && apt-get install make -y
     - name: Install dependencies
       run: make install-requirements
     - name: Lint
@@ -23,11 +24,12 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mlrun/mlrun:1.4.1
-      options: --user 1001
       
     steps:
     - uses: actions/checkout@v2
+    - name: Install make
+      run: apt-get update && apt-get install make -y
     - name: Install dependencies
       run: make install-requirements
-    - name: UNit tests
+    - name: Unit tests
       run: make test
