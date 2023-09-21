@@ -1,4 +1,4 @@
-name: train-workflow
+name: Train Workflow
 on: 
   workflow_dispatch:
 
