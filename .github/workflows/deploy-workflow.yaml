@@ -21,7 +21,7 @@ jobs:
     - name: Get Current Branch
       id: branch
       run: echo "branch=$(echo $GITHUB_REF | sed 's/refs\/heads\///')" >> $GITHUB_OUTPUT
-    - name: Training model
+    - name: Deploy model
       run: |
         python main.py --workflow-name deploy --source git --branch ${{ steps.branch.outputs.branch }}
       env:
