@@ -49,7 +49,9 @@ spec:
     name: evaluate
   - path: src/workflows/deploy_workflow.py
     name: deploy
-  artifacts: []
+  artifacts:
+  - import_from: artifacts/model:challenger.yaml
+    key: model
   conda: ''
   source: v3io:///bigdata/cicd-flow.zip
   origin_url: git://github.com/igz-us-sales/igz-cicd-flow.git#refs/heads/master

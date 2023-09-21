@@ -112,6 +112,8 @@ def create_and_set_project(
         name="deploy", workflow_path="src/workflows/deploy_workflow.py"
     )
 
+    # Set artifacts
+
     # Save and return the project:
     project.save()
     return project
