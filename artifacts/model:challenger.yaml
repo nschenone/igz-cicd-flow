@@ -2,11 +2,11 @@ kind: model
 metadata:
   key: model
   project: cicd-flow
-  iter: 1
-  tree: da326db4-564b-455d-a419-567191d9fca1
+  iter: 0
+  tree: 12ca619581ce942a293c8398a975e55192a09cae
   hash: 6ba39f8fa6e0481181e60ff3f38edec6c28dc90f
   tag: latest
-  updated: '2023-09-21T22:25:20.255469+00:00'
+  updated: '2023-09-21T23:28:01.318547+00:00'
   labels:
     workflow-id: da326db4-564b-455d-a419-567191d9fca1
     framework: sklearn
@@ -1304,11 +1304,9 @@ spec:
         - 0.9500000000000001
         - 1.0
   producer:
-    name: train
-    kind: run
-    uri: cicd-flow/c652f05c4f894583bd8e0ec906c1ebe2-1
-    owner: nick
-    workflow: da326db4-564b-455d-a419-567191d9fca1
+    kind: project
+    name: cicd-flow
+    tag: 12ca619581ce942a293c8398a975e55192a09cae
   sources:
   - name: train
     path: store://artifacts/cicd-flow/data-process-data_train:da326db4-564b-455d-a419-567191d9fca1
