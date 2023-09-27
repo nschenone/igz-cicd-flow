@@ -49,7 +49,7 @@ First, the data scientist initiates the training pipeline to train the machine l
 python main.py --workflow-name train
 ```
 
-Under the hood, this spins up a containerized pipeline on Kubernetes. This results in the following model training run:
+Under the hood, this spins up a containerized pipeline on Kubernetes - the code for which is in [train_workflow.py](src/workflows/train_workflow.py). This results in the following model training run:
 
 ![](docs/training_pipeline.png)
 
@@ -119,7 +119,7 @@ Additionally, a Slack Notification is sent to notify the start of the pipeline:
 
 ![](docs/slack_1.png)
 
-The containerized deployment pipeline itself runs in the Iguaizo cluster:
+The containerized deployment pipeline itself runs in the Iguaizo cluster - the code for which is in [deploy_workflow.py](src/workflows/deploy_workflow.py):
 
 ![](docs/deploy_pipeline.png)
 
