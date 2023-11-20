@@ -1,9 +1,14 @@
+import os
+
 import click
+import mlrun
 from mlrun.datastore import StoreManager
 
 from config import AppConfig
 
 config = AppConfig()
+if os.path.exists(config.secrets_file):
+    mlrun.set_env_from_file(config.secrets_file)
 
 
 def prompt_user(model_uri: str, challenger_model_tag: str) -> bool:

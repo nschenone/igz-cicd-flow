@@ -1,7 +1,7 @@
 kind: project
 metadata:
   name: cicd-flow
-  created: '2023-10-17T00:38:02.093000'
+  created: '2023-11-20T23:11:35.185000'
 spec:
   functions:
   - url: src/project_setup.py
@@ -45,25 +45,20 @@ spec:
   workflows:
   - path: src/workflows/train_workflow.py
     name: train
-  - path: src/workflows/evaluate_workflow.py
-    name: evaluate
   - path: src/workflows/deploy_workflow.py
     name: deploy
   artifacts:
   - import_from: artifacts/model:challenger.yaml
     key: model
     tag: challenger
-  artifact_path: s3://igz-artifacts/projects/{{run.project}}/artifacts
+  artifact_path: s3://mlrun/projects/{{run.project}}/artifacts
   conda: ''
-  source: v3io:///bigdata/cicd-flow.zip
-  origin_url: git://github.com/igz-us-sales/igz-cicd-flow#refs/heads/development
+  source: s3://mlrun/cicd-flow.zip
+  origin_url: git://github.com/igz-us-sales/igz-cicd-flow.git#refs/heads/development
   load_source_on_run: true
   desired_state: online
-  owner: nick
   default_image: .mlrun/func-cicd-flow-image-builder:latest
   build:
-    image: .mlrun/func-cicd-flow-image-builder:latest
-    base_image: mlrun/mlrun:1.4.1
     commands: []
     requirements: []
   custom_packagers: []

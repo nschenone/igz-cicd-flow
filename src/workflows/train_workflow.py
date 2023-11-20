@@ -14,7 +14,7 @@ def pipeline(
     project = mlrun.get_current_project()
 
     # Ingest data
-    ingest_fn = project.get_function("data").apply(mlrun.mount_v3io())
+    ingest_fn = project.get_function("data")  # .apply(mlrun.mount_v3io())
     ingest = project.run_function(
         ingest_fn,
         handler="get_data",

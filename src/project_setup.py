@@ -24,14 +24,18 @@ def create_and_set_project(
     :returns: a fully prepared project for this demo.
     """
 
+    # Set environment secrets via secrets file
+    if secrets_file and os.path.exists(secrets_file):
+        mlrun.set_env_from_file(secrets_file)
+
     # Get / Create a project from the MLRun DB:
     project = mlrun.get_or_create_project(
         name=name, context="./", user_project=user_project
     )
 
     # Set MLRun project secrets via secrets file
-    if secrets_file and os.path.exists(secrets_file):
-        project.set_secrets(file_path=secrets_file)
+    # if secrets_file and os.path.exists(secrets_file):
+    #     project.set_secrets(file_path=secrets_file)
 
     # Set artifact path
     if artifact_path:

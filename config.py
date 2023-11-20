@@ -21,11 +21,11 @@ class DeployConfig(BaseModel):
 class AppConfig(BaseSettings):
     # Project
     project_name: str = "cicd-flow"
-    archive_source: str = "v3io:///bigdata/cicd-flow.zip"
+    archive_source: str = "s3://mlrun/cicd-flow.zip"
     git_repo: str = "git://github.com/igz-us-sales/igz-cicd-flow"
     git_branch: str = "master"
     secrets_file: str = "secrets.env"
-    artifact_path: str = "s3://igz-artifacts/projects/{{run.project}}/artifacts"
+    artifact_path: str = "s3://mlrun/projects/{{run.project}}/artifacts"
 
     # CI/CD environments
     environments: List[str] = ["development", "staging", "master"]

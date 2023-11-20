@@ -21,7 +21,7 @@ def pipeline(
 
     # Deploy model to endpoint
     serving_fn = project.get_function("serving")
-    serving_fn.set_tracking()
+    # serving_fn.set_tracking()
     deploy = project.deploy_function(
         serving_fn,
         models=[
@@ -39,8 +39,8 @@ def pipeline(
             "table": get_challenger_model.outputs["test_set_uri"],
         },
         params={
-            "addr": deploy.outputs["endpoint"],
+            "addr": f"http://{serving_fn.status.internal_invocation_urls[0]}",
             "label_column": label_column,
             "model": deploy_model_name,
         },
-    )
+    ).after(deploy)
