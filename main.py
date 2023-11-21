@@ -33,8 +33,18 @@ config = AppConfig()
     help="Specify whether the environments exist in the same cluster.",
     default=False,
 )
+@click.option(
+    "--force-build",
+    is_flag=True,
+    help="Specify whether to re-build Docker images.",
+    default=False,
+)
 def main(
-    workflow_name: str, source: str, branch: str, single_cluster_mode: bool
+    workflow_name: str,
+    source: str,
+    branch: str,
+    single_cluster_mode: bool,
+    force_build: bool,
 ) -> None:
     global config
 
@@ -53,6 +63,7 @@ def main(
         source=project_source,
         artifact_path=config.artifact_path,
         user_project=user_project,
+        force_build=force_build,
     )
 
     print(f"Loading config for workflow {workflow_name}...")

@@ -28,7 +28,7 @@ class AppConfig(BaseSettings):
     artifact_path: str = "s3://mlrun/projects/{{run.project}}/artifacts"
 
     # CI/CD environments
-    environments: List[str] = ["development", "staging", "master"]
+    environments: List[str] = ["development", "staging", "master", "k3d"]
 
     # Artifacts
     challenger_model_tag: str = "challenger"

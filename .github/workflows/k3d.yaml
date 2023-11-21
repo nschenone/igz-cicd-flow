@@ -1,0 +1,90 @@
+# act --container-architecture linux/amd64 --rm --secret-file secrets.env -j k3d
+# Took 25 mins (with caching)
+name: K3d
+on: 
+  workflow_dispatch:
+
+jobs:
+  k3d:
+    name: k3d
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    defaults:
+      run:
+        shell: bash -el {0}
+    # container:
+    #   image: mlrun/mlrun:1.4.1
+      # options: --user 1001
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'v1.25.9'
+
+    - name: Install helm
+      uses: azure/setup-helm@v3
+      with:
+        version: 'v3.12.2'
+    
+    - name: Install tilt
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
+        tilt version
+
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-activate-base: true
+        activate-environment: true
+        miniconda-version: "latest"
+        python-version: 3.9  
+
+    - name: Install requirements
+      run: |
+        pip install -r requirements-mlrun.txt
+        pip install -r requirements.txt -r requirements-dev.txt
+
+    - uses: AbsaOSS/k3d-action@v2
+      name: "Create k3d Cluster"
+      with:
+          k3d-version: v5.6.0
+          cluster-name: "k3d-mlrun-cicd"
+          args: >-
+            --config=k8s/k3d-cluster-mlrun.yaml
+
+    - name: Cluster info
+      run: |
+        kubectl cluster-info --context k3d-k3d-mlrun-cicd
+
+    - name: Nodes
+      run: |
+        kubectl config use-context k3d-k3d-mlrun-cicd
+        kubectl get nodes -o wide
+
+    - name: Deploy MLRun CE
+      run: |
+        tilt ci
+
+    - name: Pods
+      run: |
+        kubectl get pods -n mlrun
+
+    - name: Training model
+      run: |
+        python main.py --workflow-name train --source git --branch k3d --single-cluster-mode --force-build
+      env:
+        V3IO_USERNAME: ${{ secrets.V3IO_USERNAME }}
+        V3IO_PASSWORD: ${{ secrets.V3IO_USERNAME }}
+        V3IO_API: ${{ secrets.V3IO_API }}
+        V3IO_ACCESS_KEY: ${{ secrets.V3IO_ACCESS_KEY }}
+        MLRUN_DBPATH: ${{ secrets.MLRUN_DBPATH }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        CMD: ${{ github.event.comment.body}}  
+        COMMIT: ${{ github.sha}}
+
+    - name: Delete k3d cluster
+      run: |
+        k3d cluster delete k3d-mlrun-cicd
