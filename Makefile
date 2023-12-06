@@ -50,7 +50,7 @@ flake8: ## Run flake8 lint
 	$(PYTHON_INTERPRETER) -m flake8 $(SRC) .
 
 .PHONY: conda-env
-conda-env: ## Create a conda environment
+conda-env: ## Create a conda environment (may require changing on Windows)
 	@if ! conda env list | grep -q $(CONDA_ENV); then \
 		echo "Creating new conda environment $(CONDA_ENV)..."; \
 		CONDA_SUBDIR=osx-64 conda create -n $(CONDA_ENV) -y python=$(CONDA_PY_VER) ipykernel pip protobuf=3.20.3; \
@@ -68,3 +68,24 @@ install-requirements: ## Install all requirements needed for development
 test: ## Run unit tests via pytest
 	@echo "Running unit tests via pytest..."
 	$(PYTHON_INTERPRETER) -m pytest $(TESTS)
+
+.PHONY: deploy
+deploy: ## Deploy MLOps Sandbox cluster
+	@echo "Deploying..."
+	k3d cluster create --config k8s/k3d-cluster-mlrun.yaml
+	tilt up
+
+.PHONY: start
+start: ## Start MLOps Sandbox cluster
+	@echo "Starting..."
+	k3d cluster start k3d-mlrun
+
+.PHONY: stop
+stop: ## Stop MLOps Sandbox cluster
+	@echo "Stopping..."
+	k3d cluster stop k3d-mlrun
+
+.PHONY: delete
+delete: ## Delete MLOps Sandbox cluster
+	@echo "Stopping..."
+	k3d cluster delete k3d-mlrun

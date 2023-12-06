@@ -15,7 +15,7 @@ load("ext://namespace", "namespace_create")
 load("ext://secret", "secret_yaml_registry")
 
 # If secrets are required
-dotenv(fn=".env")
+# dotenv(fn=".env")
 
 # MLRun namespace
 namespace_create(name=NAMESPACE)
@@ -55,3 +55,24 @@ helm_resource(
         "jupyterNotebook.persistence.existingClaim=jupyter-claim",
     ],
 )
+
+if config.tilt_subcommand != "ci":
+    # Dashboard
+    # helm_repo(name="k8s-at-home", url="https://k8s-at-home.com/charts/")
+    helm_resource(
+        name="homer",
+        chart="./k8s/homer",
+        # chart="k8s-at-home/homer",
+        # resource_deps=["k8s-at-home"],
+        namespace=NAMESPACE,
+        flags=["--version", "8.1.9", "-f", "k8s/homer-values.yaml"],
+    )
+
+    # Print links
+    k8s_resource(
+        workload="homer",
+        # resource_deps=["mlrun-ce-k3d"],
+        links=[
+            link(name="Dashboard", url="http://" + HOST + ":30000"),
+        ],
+    )
