@@ -9,7 +9,7 @@ jobs:
     name: Lint code
     runs-on: ubuntu-latest
     container:
-      image: mlrun/mlrun:1.4.1
+      image: mlrun/mlrun:1.5.0
       
     steps:
     - uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
     name: Unit tests
     runs-on: ubuntu-latest
     container:
-      image: mlrun/mlrun:1.4.1
+      image: mlrun/mlrun:1.5.0
       
     steps:
     - uses: actions/checkout@v2
