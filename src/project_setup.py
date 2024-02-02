@@ -7,7 +7,7 @@ def create_and_set_project(
     name: str,
     source: str,
     default_image: str = None,
-    default_base_image: str = "mlrun/mlrun:1.4.1",
+    default_base_image: str = "mlrun/mlrun:1.5.0",
     image_requirements_file: str = "requirements.txt",
     artifact_path: str = None,
     user_project: bool = False,
