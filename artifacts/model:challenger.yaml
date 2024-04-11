@@ -2,30 +2,30 @@ kind: model
 metadata:
   key: model
   project: cicd-flow
-  iter: 0
-  tree: ccd0001d77290555c0e84249b51c1b9510d286c9
-  hash: 467e4f7ab296ae57037f15a620250ffe4e28ebe6
+  iter: 1
+  tree: 1c239391-0f66-4a43-8e54-7aa04f2a43f2
+  hash: cdf185a29766cfe5bba10b6f77d4907cf47541ef
   tag: latest
-  updated: '2024-02-02T00:56:32.669764+00:00'
+  updated: '2024-04-11 20:36:47.687414+00:00'
   labels:
-    workflow-id: 65bb655b-8772-46d4-9db1-1e97f3f027ad
+    workflow-id: 1c239391-0f66-4a43-8e54-7aa04f2a43f2
     framework: sklearn
 spec:
-  target_path: s3://igz-artifacts/projects/cicd-flow/artifacts/65bb655b-8772-46d4-9db1-1e97f3f027ad/train/1/model/
-  size: 6140399
+  target_path: s3://igz-artifacts/projects/cicd-flow/artifacts/1c239391-0f66-4a43-8e54-7aa04f2a43f2/train/1/model/
+  size: 3915640
   db_key: model
   extra_data:
-    feature-importance: s3://igz-artifacts/projects/cicd-flow/artifacts/65bb655b-8772-46d4-9db1-1e97f3f027ad/train/1/feature-importance.html
-    test_set: s3://igz-artifacts/projects/cicd-flow/artifacts/65bb655b-8772-46d4-9db1-1e97f3f027ad/train/1/test_set.parquet
-    confusion-matrix: s3://igz-artifacts/projects/cicd-flow/artifacts/65bb655b-8772-46d4-9db1-1e97f3f027ad/train/1/confusion-matrix.html
-    roc-curves: s3://igz-artifacts/projects/cicd-flow/artifacts/65bb655b-8772-46d4-9db1-1e97f3f027ad/train/1/roc-curves.html
-    calibration-curve: s3://igz-artifacts/projects/cicd-flow/artifacts/65bb655b-8772-46d4-9db1-1e97f3f027ad/train/1/calibration-curve.html
+    feature-importance: s3://igz-artifacts/projects/cicd-flow/artifacts/1c239391-0f66-4a43-8e54-7aa04f2a43f2/train/1/feature-importance.html
+    test_set: s3://igz-artifacts/projects/cicd-flow/artifacts/1c239391-0f66-4a43-8e54-7aa04f2a43f2/train/1/test_set.parquet
+    confusion-matrix: s3://igz-artifacts/projects/cicd-flow/artifacts/1c239391-0f66-4a43-8e54-7aa04f2a43f2/train/1/confusion-matrix.html
+    roc-curves: s3://igz-artifacts/projects/cicd-flow/artifacts/1c239391-0f66-4a43-8e54-7aa04f2a43f2/train/1/roc-curves.html
+    calibration-curve: s3://igz-artifacts/projects/cicd-flow/artifacts/1c239391-0f66-4a43-8e54-7aa04f2a43f2/train/1/calibration-curve.html
   model_file: model.pkl
   metrics:
-    accuracy: 0.896551724137931
-    f1_score: 0.888888888888889
-    precision_score: 0.8
-    recall_score: 1.0
+    accuracy: 0.8620689655172413
+    f1_score: 0.8461538461538461
+    precision_score: 0.7857142857142857
+    recall_score: 0.9166666666666666
   inputs:
   - name: sex_female
     value_type: float
@@ -1304,14 +1304,16 @@ spec:
         - 0.9500000000000001
         - 1.0
   producer:
-    kind: project
-    name: cicd-flow
-    tag: ccd0001d77290555c0e84249b51c1b9510d286c9
+    name: train
+    kind: run
+    uri: cicd-flow/d378390ed2724c64bf11e09ca8914b06-1
+    owner: nick
+    workflow: 1c239391-0f66-4a43-8e54-7aa04f2a43f2
   sources:
   - name: train
-    path: store://artifacts/cicd-flow/data-process-data_train:65bb655b-8772-46d4-9db1-1e97f3f027ad
+    path: store://artifacts/cicd-flow/data-process-data_train:1c239391-0f66-4a43-8e54-7aa04f2a43f2
   - name: test
-    path: store://artifacts/cicd-flow/data-process-data_test:65bb655b-8772-46d4-9db1-1e97f3f027ad
+    path: store://artifacts/cicd-flow/data-process-data_test:1c239391-0f66-4a43-8e54-7aa04f2a43f2
   license: ''
 status:
   state: created
