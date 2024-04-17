@@ -1,7 +1,7 @@
 kind: project
 metadata:
   name: cicd-flow
-  created: '2024-02-02T00:42:31.497000'
+  created: '2024-04-17T23:09:11.995000'
 spec:
   functions:
   - url: src/project_setup.py
@@ -53,7 +53,7 @@ spec:
   - import_from: artifacts/model:challenger.yaml
     key: model
     tag: challenger
-  artifact_path: s3://igz-artifacts/projects/{{run.project}}/artifacts
+  artifact_path: s3://iguazio-demo/projects/{{run.project}}/artifacts
   conda: ''
   source: v3io:///bigdata/cicd-flow.zip
   origin_url: git://github.com/igz-us-sales/igz-cicd-flow.git#refs/heads/development
