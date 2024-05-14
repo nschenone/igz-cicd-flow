@@ -1,4 +1,5 @@
 import mlrun
+from mlrun.artifacts import get_model
 
 
 @mlrun.handler(outputs=["model_uri", "test_set_uri"])
@@ -7,8 +8,12 @@ def get_model_uri_from_tag(
 ) -> str:
     project = context.get_project_object()
 
-    model_artifact = project.list_models(
-        name=model_name, tag=model_tag, best_iteration=True
-    )[0]
+    model_uri = project.get_artifact_uri(
+        key=model_name,
+        category="model",
+        tag=model_tag,
+        iter=0
+    )
+    _, _, extra_data = get_model(model_uri)
 
-    return model_artifact.uri, model_artifact.extra_data["test_set"]
+    return model_uri, str(extra_data["test_set"])
