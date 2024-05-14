@@ -55,12 +55,11 @@ spec:
     tag: challenger
   artifact_path: s3://iguazio-demo/projects/{{run.project}}/artifacts
   conda: ''
-  source: v3io:///bigdata/cicd-flow.zip
+  source: git://github.com/igz-us-sales/igz-cicd-flow.git#refs/heads/development
   origin_url: git://github.com/igz-us-sales/igz-cicd-flow.git#refs/heads/development
   load_source_on_run: true
   desired_state: online
-  owner: nick
-  default_image: .mlrun/mlrunfunc-cicd-flow-image-builder:latest
+  default_image: nschenone/mlrun-cicd:1.5.0
   build:
     image: .mlrun/func-cicd-flow-image-builder:latest
     base_image: mlrun/mlrun:1.4.1
