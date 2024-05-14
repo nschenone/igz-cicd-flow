@@ -1,2 +1,2 @@
 PyGithub==1.59.0
-deepchecks==0.17.4
+deepchecks==0.18.1
