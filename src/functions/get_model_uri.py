@@ -9,10 +9,7 @@ def get_model_uri_from_tag(
     project = context.get_project_object()
 
     model_uri = project.get_artifact_uri(
-        key=model_name,
-        category="model",
-        tag=model_tag,
-        iter=0
+        key=model_name, category="model", tag=model_tag, iter=0
     )
     _, _, extra_data = get_model(model_uri)
 
