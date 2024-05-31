@@ -1,7 +1,7 @@
 kind: project
 metadata:
   name: cicd-flow
-  created: '2024-04-17T23:09:11.995000'
+  created: '2024-05-31T19:55:27.888000'
 spec:
   functions:
   - url: src/project_setup.py
@@ -33,7 +33,7 @@ spec:
     name: serving
     kind: serving
     image: mlrun/mlrun:1.5.0
-    requirements: requirements.txt
+    requirements_file: requirements.txt
   - url: hub://v2_model_tester
     name: model-server-tester
     kind: job
