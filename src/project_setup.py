@@ -54,7 +54,7 @@ def create_and_set_project(
             build_status = project.build_function(
                 function=image_builder,
                 base_image=default_base_image,
-                requirements=image_requirements_file,
+                requirements_file=image_requirements_file,
             )
             default_image = build_status.outputs["image"]
 
@@ -101,7 +101,7 @@ def create_and_set_project(
         func="hub://v2_model_server",
         kind="serving",
         image=default_base_image,
-        requirements=image_requirements_file,
+        requirements_file=image_requirements_file,
     )
     project.set_function(
         name="model-server-tester",
