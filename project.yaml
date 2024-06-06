@@ -1,7 +1,7 @@
 kind: project
 metadata:
   name: cicd-flow
-  created: '2024-05-31T19:55:27.888000'
+  created: '2024-06-06T19:53:23.723000'
 spec:
   functions:
   - url: src/project_setup.py
