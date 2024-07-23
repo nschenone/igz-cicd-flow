@@ -3,29 +3,29 @@ metadata:
   key: model
   project: cicd-flow
   iter: 1
-  tree: f503b3ad-5074-4cf7-ac71-5d61c165d465
-  hash: cc8191ed3c5a4e5e77e1329161e60fe12818095a
+  tree: f64aebfc-345a-498e-8dd8-73932c06ddba
+  hash: e32b48ac461c00742bf0188b408eda5fd8e7a127
   tag: latest
-  updated: '2024-06-06 19:57:55.184762+00:00'
+  updated: '2024-07-23 19:28:40.150225+00:00'
   labels:
-    workflow-id: f503b3ad-5074-4cf7-ac71-5d61c165d465
+    workflow-id: f64aebfc-345a-498e-8dd8-73932c06ddba
     framework: sklearn
 spec:
-  target_path: s3://iguazio-demo/projects/cicd-flow/artifacts/f503b3ad-5074-4cf7-ac71-5d61c165d465/train/1/model/
-  size: 989803
+  target_path: s3://iguazio-demo/projects/cicd-flow/artifacts/f64aebfc-345a-498e-8dd8-73932c06ddba/train/1/model/
+  size: 1788152
   db_key: model
   extra_data:
-    feature-importance: s3://iguazio-demo/projects/cicd-flow/artifacts/f503b3ad-5074-4cf7-ac71-5d61c165d465/train/1/feature-importance.html
-    test_set: s3://iguazio-demo/projects/cicd-flow/artifacts/f503b3ad-5074-4cf7-ac71-5d61c165d465/train/1/test_set.parquet
-    confusion-matrix: s3://iguazio-demo/projects/cicd-flow/artifacts/f503b3ad-5074-4cf7-ac71-5d61c165d465/train/1/confusion-matrix.html
-    roc-curves: s3://iguazio-demo/projects/cicd-flow/artifacts/f503b3ad-5074-4cf7-ac71-5d61c165d465/train/1/roc-curves.html
-    calibration-curve: s3://iguazio-demo/projects/cicd-flow/artifacts/f503b3ad-5074-4cf7-ac71-5d61c165d465/train/1/calibration-curve.html
+    feature-importance: s3://iguazio-demo/projects/cicd-flow/artifacts/f64aebfc-345a-498e-8dd8-73932c06ddba/train/1/feature-importance.html
+    test_set: s3://iguazio-demo/projects/cicd-flow/artifacts/f64aebfc-345a-498e-8dd8-73932c06ddba/train/1/test_set.parquet
+    confusion-matrix: s3://iguazio-demo/projects/cicd-flow/artifacts/f64aebfc-345a-498e-8dd8-73932c06ddba/train/1/confusion-matrix.html
+    roc-curves: s3://iguazio-demo/projects/cicd-flow/artifacts/f64aebfc-345a-498e-8dd8-73932c06ddba/train/1/roc-curves.html
+    calibration-curve: s3://iguazio-demo/projects/cicd-flow/artifacts/f64aebfc-345a-498e-8dd8-73932c06ddba/train/1/calibration-curve.html
   model_file: model.pkl
   metrics:
-    accuracy: 0.8596491228070176
-    f1_score: 0.8571428571428572
-    precision_score: 0.8275862068965517
-    recall_score: 0.8888888888888888
+    accuracy: 0.8771929824561403
+    f1_score: 0.8771929824561403
+    precision_score: 0.8333333333333334
+    recall_score: 0.9259259259259259
   inputs:
   - name: sex_female
     value_type: float
@@ -1306,14 +1306,14 @@ spec:
   producer:
     name: train
     kind: run
-    uri: cicd-flow/60099c50482a4cc9a51bd2e9d1f0afcc-1
+    uri: cicd-flow/b0897df23f5e4c9b9bfd2e50e3217724-1
     owner: nick
-    workflow: f503b3ad-5074-4cf7-ac71-5d61c165d465
+    workflow: f64aebfc-345a-498e-8dd8-73932c06ddba
   sources:
   - name: train
-    path: store://artifacts/cicd-flow/data-process-data_train@f503b3ad-5074-4cf7-ac71-5d61c165d465
+    path: store://artifacts/cicd-flow/data-process-data_train@f64aebfc-345a-498e-8dd8-73932c06ddba
   - name: test
-    path: store://artifacts/cicd-flow/data-process-data_test@f503b3ad-5074-4cf7-ac71-5d61c165d465
+    path: store://artifacts/cicd-flow/data-process-data_test@f64aebfc-345a-498e-8dd8-73932c06ddba
   license: ''
 status:
   state: created
