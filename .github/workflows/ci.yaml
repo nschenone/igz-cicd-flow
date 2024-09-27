@@ -24,7 +24,7 @@ jobs:
     name: Unit tests
     runs-on: ubuntu-latest
     container:
-      image: mlrun/mlrun:1.5.0
+      image: mlrun/mlrun:1.6.2
       
     steps:
     - uses: actions/checkout@v2
