@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.ref_name }}
     container:
-      image: mlrun/mlrun:1.5.0
+      image: mlrun/mlrun:1.6.2
       options: --user 1001
     
     steps:
     - uses: actions/checkout@v2
     - name: Deploy model
       run: |
-        python main.py --workflow-name deploy --source git --branch ${{ github.ref_name }} --single-cluster-mode
+        python project_run.py --workflow-name deploy --source git --branch ${{ github.ref_name }} --single-cluster-mode
       env:
         V3IO_USERNAME: ${{ secrets.V3IO_USERNAME }}
         V3IO_PASSWORD: ${{ secrets.V3IO_USERNAME }}
