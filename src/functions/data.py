@@ -1,14 +1,21 @@
 import mlrun
 import pandas as pd
+import pandera as pa
+from pandera.typing import DataFrame
 from sklearn.compose import make_column_transformer
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OneHotEncoder
 
+from src.functions.models import HeartSchema
+
 
 @mlrun.handler(outputs=["data"])
-def get_data(data: pd.DataFrame):
-    return data
+@pa.check_types(lazy=True)
+def get_data(data: pd.DataFrame) -> DataFrame[HeartSchema]:
+    # Alternatively
+    # HeartSchema.validate(data, lazy=True)
+    return data.copy()
 
 
 @mlrun.handler(outputs=["train", "test", "preprocessor:object"])

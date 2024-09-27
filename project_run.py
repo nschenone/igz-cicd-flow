@@ -1,7 +1,7 @@
 import click
+import mlrun
 
 from config import AppConfig
-from src import create_and_set_project
 
 config = AppConfig()
 
@@ -48,11 +48,14 @@ def main(
     )
 
     print(f"Loading project {config.project_name} with source {project_source}")
-    project = create_and_set_project(
+    project = mlrun.get_or_create_project(
         name=config.project_name,
-        source=project_source,
-        artifact_path=config.artifact_path,
-        user_project=user_project,
+        parameters={
+            "source": project_source,
+            "artifact_path": config.artifact_path,
+            "user_project": user_project,
+            "force_build": False,
+        },
     )
 
     print(f"Loading config for workflow {workflow_name}...")

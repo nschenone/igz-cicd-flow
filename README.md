@@ -43,10 +43,10 @@ These are located here in [.github/workflows](.github/workflows):
 ### Development
 
 #### Run Training Pipeline
-First, the data scientist initiates the training pipeline to train the machine learning model using the latest code and data. The training pipeline parameters are pulled from a centralized configuration file ([config.py](config.py)) and validated by [Pydantic](https://docs.pydantic.dev/1.10/) before executing via the main entrypoint script ([main.py](main.py)):
+First, the data scientist initiates the training pipeline to train the machine learning model using the latest code and data. The training pipeline parameters are pulled from a centralized configuration file ([config.py](config.py)) and validated by [Pydantic](https://docs.pydantic.dev/1.10/) before executing via the main entrypoint script ([project_run.py](project_run.py)):
 
 ```bash
-python main.py --workflow-name train
+python project_run.py --workflow-name train
 ```
 
 Under the hood, this spins up a containerized pipeline on Kubernetes - the code for which is in [train_workflow.py](src/workflows/train_workflow.py). This results in the following model training run:
@@ -68,10 +68,10 @@ First, the data scientist copies the model URI from the model registry:
 
 ![](docs/model_uri.png)
 
-Then, the model is exported by using the model export script ([export_model.py](export_model.py)). 
+Then, the model is exported by using the model export script ([project_export.py](project_export.py)). 
 
 ```bash
-python export_model.py --model-uri store://models/cicd-flow/model#0:latest
+python project_export.py --model-uri store://models/cicd-flow/model#0:latest
 ```
 
 This results in the following output:
@@ -80,7 +80,7 @@ This results in the following output:
 Export model 'store://models/cicd-flow/model#0:latest' with tag 'challenger'? (yes/no): yes
 Exporting model to artifacts/model:challenger.yaml...
 
-Add the following to the `src/project_setup.py` script:
+Add the following to the `project_setup.py` script:
 
 project.set_artifact(
     key="model", artifact="artifacts/model:challenger.yaml", tag="challenger"

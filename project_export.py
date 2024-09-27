@@ -68,7 +68,7 @@ def export_challenger_model(
 
     # Print out command to add to project_setup.py with challenger tag
     print(
-        f"""\nAdd the following to the `src/project_setup.py` script:\n
+        f"""\nAdd the following to the `project_setup.py` script:\n
 project.set_artifact(
     key="{model_artifact.metadata.key}", artifact="{target_path}", tag="{challenger_model_tag}"
 )"""

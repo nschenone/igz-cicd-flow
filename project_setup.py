@@ -1,37 +1,25 @@
 import os
+from pathlib import Path
 
 import mlrun
 
 
-def create_and_set_project(
-    name: str,
-    source: str,
-    default_image: str = None,
-    default_base_image: str = "mlrun/mlrun:1.5.0",
-    image_requirements_file: str = "requirements.txt",
-    artifact_path: str = None,
-    user_project: bool = False,
-    secrets_file: str = None,
-    force_build: bool = False,
-):
-    """
-    Creating the project for this demo.
-    :param source:                  the source of the project.
-    :param name:                    project name
-    :param default_image:           the default image of the project
-    :param user_project:            whether to add username to the project name
-
-    :returns: a fully prepared project for this demo.
-    """
-
-    # Get / Create a project from the MLRun DB:
-    project = mlrun.get_or_create_project(
-        name=name, context="./", user_project=user_project
+def setup(project: mlrun.projects.MlrunProject) -> mlrun.projects.MlrunProject:
+    source = project.get_param("source")
+    default_image = project.get_param("default_image")
+    default_base_image = project.get_param("default_base_image", "mlrun/mlrun:1.6.2")
+    image_requirements_file = project.get_param(
+        "image_requirements_file", "requirements.txt"
     )
+    artifact_path = project.get_param("artifact_path")
+    user_project = project.get_param("user_project", False)
+    secrets_file = project.get_param("secrets_file")
+    force_build = project.get_param("force_build", False)
 
     # Set MLRun project secrets via secrets file
     if secrets_file and os.path.exists(secrets_file):
         project.set_secrets(file_path=secrets_file)
+        mlrun.set_env_from_file(secrets_file)
 
     # Set artifact path
     if artifact_path:
@@ -40,33 +28,26 @@ def create_and_set_project(
     # Load artifacts
     project.register_artifacts()
 
-    # Set or build the default image:
-    if force_build or project.default_image is None:
-        if default_image is None:
-            print("Building default project image...")
-            image_builder = project.set_function(
-                func="src/project_setup.py",
-                name="image-builder",
-                handler="assert_build",
-                kind="job",
-                image=default_base_image,
-            )
-            build_status = project.build_function(
-                function=image_builder,
-                base_image=default_base_image,
-                requirements_file=image_requirements_file,
-            )
-            default_image = build_status.outputs["image"]
+    # Set default project docker image - functions that do not specify image will use this
+    if default_base_image and image_requirements_file and force_build:
+        requirements = Path(image_requirements_file).read_text().split()
+        command = f'pip install {" ".join(requirements)}'
+        project.build_image(
+            base_image=default_base_image,
+            commands=[command],
+            set_as_default=True,
+            overwrite_build_params=True,
+            with_mlrun=False,
+        )
 
-        project.set_default_image(default_image)
+    # Set project git/archive source and enable pulling latest code at runtime
+    if source:
+        print(f"Project Source: {source}")
+        project.set_source(source, pull_at_runtime=True)
 
-    # Export project to zip if relevant
-    if ".zip" in source:
-        print(f"Exporting project as zip archive to {source}...")
-        project.export(source)
-
-    # Set the project source
-    project.set_source(source, pull_at_runtime=True)
+        if ".zip" in source:
+            print(f"Exporting project as zip archive to {source}...")
+            project.export(source)
 
     # Set MLRun functions
     project.set_function(
