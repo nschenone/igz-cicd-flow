@@ -1,14 +1,15 @@
 kind: project
 metadata:
   name: cicd-flow
-  created: '2024-07-23T19:23:37.998000'
+  created: '2024-09-27T19:26:50.786000'
 spec:
+  params:
+    source: v3io:///bigdata/cicd-flow.zip
+    secrets_file: secrets.env
+    artifact_path: s3://iguazio-demo/projects/{{run.project}}/artifacts
+    force_build: false
+    user_project: false
   functions:
-  - url: src/project_setup.py
-    name: image-builder
-    kind: job
-    image: mlrun/mlrun:1.5.0
-    handler: assert_build
   - url: src/functions/data.py
     name: data
     kind: job
@@ -20,7 +21,7 @@ spec:
   - url: src/functions/train.py
     name: train
     kind: job
-    image: mlrun/mlrun:1.5.0
+    image: mlrun/mlrun:1.6.2
     handler: train_model
   - url: src/functions/validate.py
     name: validate
@@ -32,7 +33,7 @@ spec:
   - url: hub://v2_model_server
     name: serving
     kind: serving
-    image: mlrun/mlrun:1.5.0
+    image: mlrun/mlrun:1.6.2
     requirements_file: requirements.txt
   - url: hub://v2_model_tester
     name: model-server-tester
@@ -45,8 +46,6 @@ spec:
   workflows:
   - path: src/workflows/train_workflow.py
     name: train
-  - path: src/workflows/evaluate_workflow.py
-    name: evaluate
   - path: src/workflows/deploy_workflow.py
     name: deploy
   artifacts:
@@ -60,11 +59,13 @@ spec:
   load_source_on_run: true
   desired_state: online
   owner: nick
-  default_image: nschenone/mlrun-cicd:1.5.0
+  default_image: .mlrun-project-image-cicd-flow
   build:
-    image: .mlrun/func-cicd-flow-image-builder:latest
-    base_image: mlrun/mlrun:1.4.1
-    commands: []
+    image: .mlrun-project-image-cicd-flow
+    base_image: mlrun/mlrun:1.6.2
+    commands:
+    - pip install PyGithub==1.59.0 deepchecks==0.18.1 pandera==0.20.3
+    with_mlrun: false
     requirements: []
   custom_packagers: []
 status:

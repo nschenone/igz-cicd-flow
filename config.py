@@ -52,5 +52,7 @@ class AppConfig(BaseSettings):
     def git_source(self):
         return f"{self.git_repo}#{self.git_branch}"
 
-    def get_workflow_config(self, workflow_name: str) -> dict:
-        return self.workflows[workflow_name](**self.dict()).dict()
+    def get_workflow_config(self, workflow_name: str, **kwargs) -> dict:
+        workflow_dict = self.workflows[workflow_name](**self.dict()).dict()
+        workflow_dict.update(kwargs)
+        return workflow_dict
