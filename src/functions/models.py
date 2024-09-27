@@ -1,5 +1,5 @@
 import pandera as pa
-from pandera.typing import DataFrame, Series
+from pandera.typing import Series
 
 
 class HeartSchema(pa.DataFrameModel):

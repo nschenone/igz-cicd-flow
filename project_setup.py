@@ -12,7 +12,6 @@ def setup(project: mlrun.projects.MlrunProject) -> mlrun.projects.MlrunProject:
         "image_requirements_file", "requirements.txt"
     )
     artifact_path = project.get_param("artifact_path")
-    user_project = project.get_param("user_project", False)
     secrets_file = project.get_param("secrets_file")
     force_build = project.get_param("force_build", False)
 
@@ -39,6 +38,8 @@ def setup(project: mlrun.projects.MlrunProject) -> mlrun.projects.MlrunProject:
             overwrite_build_params=True,
             with_mlrun=False,
         )
+    if project.default_image is None and default_image:
+        project.set_default_image(default_image)
 
     # Set project git/archive source and enable pulling latest code at runtime
     if source:
