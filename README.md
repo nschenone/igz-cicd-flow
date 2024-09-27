@@ -43,10 +43,10 @@ These are located here in [.github/workflows](.github/workflows):
 ### Development
 
 #### Run Training Pipeline
-First, the data scientist initiates the training pipeline to train the machine learning model using the latest code and data. The training pipeline parameters are pulled from a centralized configuration file ([config.py](config.py)) and validated by [Pydantic](https://docs.pydantic.dev/1.10/) before executing via the main entrypoint script ([main.py](main.py)):
+First, the data scientist initiates the training pipeline to train the machine learning model using the latest code and data. The training pipeline parameters are pulled from a centralized configuration file ([config.py](config.py)) and validated by [Pydantic](https://docs.pydantic.dev/1.10/) before executing via the main entrypoint script ([project_run.py](project_run.py)):
 
 ```bash
-python main.py --workflow-name train
+python project_run.py --workflow-name train
 ```
 
 Under the hood, this spins up a containerized pipeline on Kubernetes - the code for which is in [train_workflow.py](src/workflows/train_workflow.py). This results in the following model training run:
