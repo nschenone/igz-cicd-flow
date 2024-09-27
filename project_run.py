@@ -50,10 +50,10 @@ def main(
     print(f"Loading project {config.project_name} with source {project_source}")
     project = mlrun.get_or_create_project(
         name=config.project_name,
+        user_project=user_project,
         parameters={
             "source": project_source,
             "artifact_path": config.artifact_path,
-            "user_project": user_project,
             "force_build": False,
         },
     )
