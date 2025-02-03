@@ -1,83 +1,89 @@
-kind: model
 metadata:
-  key: model
-  project: cicd-flow
-  iter: 1
-  tree: d743ad84-8616-4fe9-a082-c6dc1567a717
-  hash: 54cc3a4d45a4b1fe8721626955df120279d2b51a
-  tag: latest
-  updated: '2024-09-27 20:11:58.658546+00:00'
+  tree: 1e587e9e-f0e3-4ddd-9566-b7d7ff655841
+  iter: 2
   labels:
-    workflow-id: d743ad84-8616-4fe9-a082-c6dc1567a717
+    workflow-id: 1e587e9e-f0e3-4ddd-9566-b7d7ff655841
     framework: sklearn
+  tag: latest
+  hash: e0cb19de85cd8c24c26befc714a2801a9df5f919
+  project: cicd-flow
+  updated: '2025-02-03 23:18:25.135809+00:00'
+  key: model
+status:
+  state: created
 spec:
-  target_path: s3://iguazio-demo/projects/cicd-flow/artifacts/d743ad84-8616-4fe9-a082-c6dc1567a717/train/1/model/
-  size: 996040
-  db_key: model
-  extra_data:
-    feature-importance: s3://iguazio-demo/projects/cicd-flow/artifacts/d743ad84-8616-4fe9-a082-c6dc1567a717/train/1/feature-importance.html
-    test_set: s3://iguazio-demo/projects/cicd-flow/artifacts/d743ad84-8616-4fe9-a082-c6dc1567a717/train/1/test_set.parquet
-    confusion-matrix: s3://iguazio-demo/projects/cicd-flow/artifacts/d743ad84-8616-4fe9-a082-c6dc1567a717/train/1/confusion-matrix.html
-    roc-curves: s3://iguazio-demo/projects/cicd-flow/artifacts/d743ad84-8616-4fe9-a082-c6dc1567a717/train/1/roc-curves.html
-    calibration-curve: s3://iguazio-demo/projects/cicd-flow/artifacts/d743ad84-8616-4fe9-a082-c6dc1567a717/train/1/calibration-curve.html
-  model_file: model.pkl
-  metrics:
-    accuracy: 0.8596491228070176
-    f1_score: 0.8620689655172413
-    precision_score: 0.8064516129032258
-    recall_score: 0.9259259259259259
-  inputs:
-  - name: sex_female
-    value_type: float
-  - name: sex_male
-    value_type: float
-  - name: cp_asymtomatic
-    value_type: float
-  - name: cp_atypical_angina
-    value_type: float
-  - name: cp_non_anginal_pain
-    value_type: float
-  - name: cp_typical_angina
-    value_type: float
-  - name: slope_downsloping
-    value_type: float
-  - name: slope_flat
-    value_type: float
-  - name: slope_upsloping
-    value_type: float
-  - name: thal_fixed_defect
-    value_type: float
-  - name: thal_normal
-    value_type: float
-  - name: thal_reversable_defect
-    value_type: float
-  - name: restecg_left_ventricular_hypertrophy
-    value_type: float
-  - name: restecg_normal
-    value_type: float
-  - name: restecg_st-t_wave_abnormality
-    value_type: float
-  - name: age
-    value_type: float
-  - name: exang
-    value_type: float
-  - name: fbs
-    value_type: float
-  - name: trestbps
-    value_type: float
-  - name: chol
-    value_type: float
-  - name: thalach
-    value_type: float
-  - name: oldpeak
-    value_type: float
-  - name: ca
-    value_type: float
-  outputs:
-  - name: target
-    value_type: float
+  size: 2860688
   framework: sklearn
+  producer:
+    name: train
+    kind: run
+    uri: cicd-flow/9e1535b2de19433cad833825f19ac1da-2
+    owner: nick
+    workflow: 1e587e9e-f0e3-4ddd-9566-b7d7ff655841
+  extra_data:
+    feature-importance: s3://iguazio-demo/projects/cicd-flow/artifacts/1e587e9e-f0e3-4ddd-9566-b7d7ff655841/train/2/feature-importance.html
+    test_set: s3://iguazio-demo/projects/cicd-flow/artifacts/1e587e9e-f0e3-4ddd-9566-b7d7ff655841/train/2/test_set.parquet
+    confusion-matrix: s3://iguazio-demo/projects/cicd-flow/artifacts/1e587e9e-f0e3-4ddd-9566-b7d7ff655841/train/2/confusion-matrix.html
+    roc-curves: s3://iguazio-demo/projects/cicd-flow/artifacts/1e587e9e-f0e3-4ddd-9566-b7d7ff655841/train/2/roc-curves.html
+    calibration-curve: s3://iguazio-demo/projects/cicd-flow/artifacts/1e587e9e-f0e3-4ddd-9566-b7d7ff655841/train/2/calibration-curve.html
+  license: ''
+  inputs:
+  - value_type: float
+    name: sex_female
+  - value_type: float
+    name: sex_male
+  - value_type: float
+    name: cp_asymtomatic
+  - value_type: float
+    name: cp_atypical_angina
+  - value_type: float
+    name: cp_non_anginal_pain
+  - value_type: float
+    name: cp_typical_angina
+  - value_type: float
+    name: slope_downsloping
+  - value_type: float
+    name: slope_flat
+  - value_type: float
+    name: slope_upsloping
+  - value_type: float
+    name: thal_fixed_defect
+  - value_type: float
+    name: thal_normal
+  - value_type: float
+    name: thal_reversable_defect
+  - value_type: float
+    name: restecg_left_ventricular_hypertrophy
+  - value_type: float
+    name: restecg_normal
+  - value_type: float
+    name: restecg_st-t_wave_abnormality
+  - value_type: float
+    name: age
+  - value_type: float
+    name: exang
+  - value_type: float
+    name: fbs
+  - value_type: float
+    name: trestbps
+  - value_type: float
+    name: chol
+  - value_type: float
+    name: thalach
+  - value_type: float
+    name: oldpeak
+  - value_type: float
+    name: ca
+  target_path: s3://iguazio-demo/projects/cicd-flow/artifacts/1e587e9e-f0e3-4ddd-9566-b7d7ff655841/train/2/model/
+  outputs:
+  - value_type: float
+    name: target
   algorithm: RandomForestClassifier
+  sources:
+  - name: train
+    path: store://datasets/cicd-flow/data-process-data_train:latest@1e587e9e-f0e3-4ddd-9566-b7d7ff655841
+  - name: test
+    path: store://datasets/cicd-flow/data-process-data_test:latest@1e587e9e-f0e3-4ddd-9566-b7d7ff655841
   feature_stats:
     sex_female:
       count: 228.0
@@ -1303,17 +1309,11 @@ spec:
         - 0.9
         - 0.9500000000000001
         - 1.0
-  producer:
-    name: train
-    kind: run
-    uri: cicd-flow/37fee5e2224e4ab5b90e71769c2f483a-1
-    owner: nick
-    workflow: d743ad84-8616-4fe9-a082-c6dc1567a717
-  sources:
-  - name: train
-    path: store://artifacts/cicd-flow/data-process-data_train@d743ad84-8616-4fe9-a082-c6dc1567a717
-  - name: test
-    path: store://artifacts/cicd-flow/data-process-data_test@d743ad84-8616-4fe9-a082-c6dc1567a717
-  license: ''
-status:
-  state: created
+  model_file: model.pkl
+  db_key: model
+  metrics:
+    accuracy: 0.8771929824561403
+    f1_score: 0.8771929824561403
+    precision_score: 0.8333333333333334
+    recall_score: 0.9259259259259259
+kind: model

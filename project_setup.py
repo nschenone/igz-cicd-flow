@@ -7,7 +7,7 @@ import mlrun
 def setup(project: mlrun.projects.MlrunProject) -> mlrun.projects.MlrunProject:
     source = project.get_param("source")
     default_image = project.get_param("default_image")
-    default_base_image = project.get_param("default_base_image", "mlrun/mlrun:1.6.2")
+    default_base_image = project.get_param("default_base_image", "mlrun/mlrun:1.7.2")
     image_requirements_file = project.get_param(
         "image_requirements_file", "requirements.txt"
     )
@@ -87,7 +87,7 @@ def setup(project: mlrun.projects.MlrunProject) -> mlrun.projects.MlrunProject:
     )
     project.set_function(
         name="model-server-tester",
-        func="hub://v2_model_tester",
+        func="src/functions/v2_model_tester.py",
         kind="job",
         handler="model_server_tester",
     )
