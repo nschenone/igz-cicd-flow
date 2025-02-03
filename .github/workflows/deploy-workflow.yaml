@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.ref_name }}
     container:
-      image: mlrun/mlrun:1.6.2
+      image: mlrun/mlrun:1.7.2
       options: --user 1001
     
     steps:

@@ -21,7 +21,7 @@ def pipeline(
 
     # Deploy model to endpoint
     serving_fn = project.get_function("serving")
-    serving_fn.set_tracking()
+    # serving_fn.set_tracking()
     deploy = project.deploy_function(
         serving_fn,
         models=[

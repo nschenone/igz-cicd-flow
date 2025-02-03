@@ -1,7 +1,9 @@
+status:
+  state: online
 kind: project
 metadata:
-  name: cicd-flow
   created: '2024-09-27T19:26:50.786000'
+  name: cicd-flow
 spec:
   params:
     source: v3io:///bigdata/cicd-flow.zip
@@ -9,6 +11,19 @@ spec:
     artifact_path: s3://iguazio-demo/projects/{{run.project}}/artifacts
     force_build: false
     user_project: false
+  build:
+    with_mlrun: false
+    base_image: mlrun/mlrun:1.7.2
+    commands:
+    - pip install PyGithub==1.59.0 deepchecks==0.18.1 pandera==0.20.3
+    image: .mlrun-project-image-cicd-flow
+  workflows:
+  - path: src/workflows/train_workflow.py
+    name: train
+  - path: src/workflows/deploy_workflow.py
+    name: deploy
+  owner: nick
+  artifact_path: s3://iguazio-demo/projects/{{run.project}}/artifacts
   functions:
   - url: src/functions/data.py
     name: data
@@ -21,7 +36,7 @@ spec:
   - url: src/functions/train.py
     name: train
     kind: job
-    image: mlrun/mlrun:1.6.2
+    image: mlrun/mlrun:1.7.2
     handler: train_model
   - url: src/functions/validate.py
     name: validate
@@ -33,9 +48,9 @@ spec:
   - url: hub://v2_model_server
     name: serving
     kind: serving
-    image: mlrun/mlrun:1.6.2
+    image: mlrun/mlrun:1.7.2
     requirements_file: requirements.txt
-  - url: hub://v2_model_tester
+  - url: src/functions/v2_model_tester.py
     name: model-server-tester
     kind: job
     handler: model_server_tester
@@ -43,30 +58,13 @@ spec:
     name: get-model-uri
     kind: job
     handler: get_model_uri_from_tag
-  workflows:
-  - path: src/workflows/train_workflow.py
-    name: train
-  - path: src/workflows/deploy_workflow.py
-    name: deploy
+  conda: ''
+  default_image: .mlrun-project-image-cicd-flow
+  desired_state: online
+  source: v3io:///bigdata/cicd-flow.zip
+  origin_url: git://github.com/igz-us-sales/igz-cicd-flow.git#refs/heads/development
+  load_source_on_run: true
   artifacts:
   - import_from: artifacts/model:challenger.yaml
     key: model
     tag: challenger
-  artifact_path: s3://iguazio-demo/projects/{{run.project}}/artifacts
-  conda: ''
-  source: v3io:///bigdata/cicd-flow.zip
-  origin_url: git://github.com/igz-us-sales/igz-cicd-flow.git#refs/heads/development
-  load_source_on_run: true
-  desired_state: online
-  owner: nick
-  default_image: .mlrun-project-image-cicd-flow
-  build:
-    image: .mlrun-project-image-cicd-flow
-    base_image: mlrun/mlrun:1.6.2
-    commands:
-    - pip install PyGithub==1.59.0 deepchecks==0.18.1 pandera==0.20.3
-    with_mlrun: false
-    requirements: []
-  custom_packagers: []
-status:
-  state: online
